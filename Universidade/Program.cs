@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Universidade.Models; // Certifique-se de importar a classe Aluno corretamente
+using Universidade.Models;
 
 namespace Universidade
 {
@@ -8,45 +8,65 @@ namespace Universidade
     {
         static void Main(string[] args)
         {
-            List<Aluno> listAluno = new List<Aluno>(); // Movido para fora do loop
+            List<Aluno> listAluno = new List<Aluno>();
+            List<Curso> listCurso = new List<Curso>();
+            List<Disciplina> listDisciplina = new List<Disciplina>();
 
-            while (true)
+            var loopControl = true;
+
+            while (loopControl)
             {
-                Console.WriteLine("[1] - Adicionar Novo aluno:");
-                Console.WriteLine("[2] - Exibir Alunos");
-                Console.WriteLine("[3] - Excluir Aluno");
-                int valorDigitado = int.Parse(Console.ReadLine());
+                Console.WriteLine("1. Adicionar aluno:");
+                Console.WriteLine("2. Exibir todos alunos:");
 
-                switch (valorDigitado)
+                int valueTyped = int.Parse(Console.ReadLine());
+
+                switch (valueTyped)
                 {
-                    case 1:                        
-                        Console.WriteLine("Nome:");
-                        string nome = Console.ReadLine();
-                        Console.WriteLine("RA:");
+                    case 1:
+                        Console.Clear();
+
+                        Console.Write("Digite o nome: ");
+                        string name = Console.ReadLine();
+
+                        Console.Write("Digite o RA: ");
                         string ra = Console.ReadLine();
-                        Console.WriteLine("Deseja adicionar matricula? S/N");
-                        string resposta = Console.ReadLine();
-                        string nomeCurso = "";
-                        if (resposta == "N" || resposta == "n")
+
+                        var aluno = new Aluno(name, ra);
+                        listAluno.Add(aluno);
+
+                        Console.Write("Matricular em algum curso? S/N ");
+                        string registration = Console.ReadLine();
+
+                        if (registration == "s" || registration == "S")
                         {
-                            Aluno aluno = new Aluno(nome, ra);
-                            listAluno.Add(aluno);
-                        }
+                            Console.Write("Digite o nome do curso: ");
+                            string nameCorse = Console.ReadLine();
+                            var curso = new Curso(nameCorse);
+                            listCurso.Add(curso);
+                        } 
                         else
                         {
-                            Console.WriteLine("Curso:");
-                            nomeCurso = Console.ReadLine();
-                            
+                            var curso = new Curso("Aluno sem matrícula");
+                            listCurso.Add(curso);
                         }
-                        Curso curso = new Curso(nomeCurso);
+
+                        Console.WriteLine("Aluno registrado!"); 
+                        Thread.Sleep(1000);
+                        Console.Clear();
                         break;
                     case 2:
-                        Console.WriteLine("Lista de Alunos:");
-                        foreach (Aluno alun in listAluno)
+                        Console.Clear();
+
+                        for (int i = 0; i < listAluno.Count; i++)
                         {
-                            Console.Write($"Nome: {alun.Nome} \nRA: {alun.RA} \nCurso: ");
-                            Console.WriteLine(curso.Nome);
+                            Console.WriteLine(listAluno[i].Nome + " " + listAluno[i].RA + " " + listCurso[i].Nome);
                         }
+
+                        Console.WriteLine("\nPressione qualquer tecla para continuar...");
+                        Console.ReadKey();
+                        Console.Clear();
+
                         break;
                 }
             }

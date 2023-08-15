@@ -8,7 +8,7 @@ namespace Universidade.Models
 {
     internal class Curso
     {
-        public string Nome { get; set; } = "Sem Matricula";
+        public string Nome { get; set; } = "";
 
         public Curso(string nome)
         {
